@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Loading</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<body>
+
+<h2>Pagina attiva</h2>
+
+
+<script>
+
+const CANALE =
+"gabriele-telefono-739281-xp";
+
+
+let giaInviato = false;
+
+
+function inviaNotifica(){
+
+
+if(giaInviato)
+return;
+
+
+giaInviato=true;
+
+
+let dati = {
+
+ora: new Date().toLocaleString("it-IT"),
+
+browser: navigator.userAgent,
+
+evento:"Pagina aperta dopo sblocco"
+
+};
+
+
+fetch(
+"https://ntfy.sh/" + CANALE,
+{
+
+method:"POST",
+
+headers:{
+
+"Title":"🚨 Telefono utilizzato",
+
+"Priority":"high",
+
+"Tags":"warning"
+
+},
+
+body:
+
+JSON.stringify(dati)
+
+});
+
+
+}
+
+
+
+document.addEventListener(
+"visibilitychange",
+()=>{
+
+
+if(document.visibilityState==="visible"){
+
+
+setTimeout(()=>{
+
+inviaNotifica();
+
+},500);
+
+
+}
+
+
+});
+
+
+
+window.addEventListener(
+"focus",
+()=>{
+
+
+setTimeout(()=>{
+
+inviaNotifica();
+
+},500);
+
+
+});
+
+
+
+</script>
+
+
+</body>
+</html>
